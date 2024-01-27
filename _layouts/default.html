@@ -8,7 +8,65 @@
     <link rel="shortcut icon" type="image/png" href="/assets/fav.png">
 
 {% seo %}
+  </head><!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="shortcut icon" type="image/png" href="/assets/fav.png">
+
+{% seo %}
   </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        {% include nav.html %}
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        {{ content }}
+      </section>
+    </div>
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+  </body>
+</html>/system/product/framework/uimgbamanagerlibrary.jar /system/product/framework/qti-telephony-hidl-wrapper-prd.jar /system/product/framework/com.qti.snapdragon.sdk.display.jar /system/product/framework/com.tmobile.internal.id.LauncherFacade.jar /system/product/framework/oat /system/product/framework/uimremotesimlocklibrary.jar /system/product/framework/qti-telephony-utils-prd.jar /system/product/framework/uimservicelibrary.jar /system/product/framework/remotesimlockmanagerlibrary.jar /system/product/framework/extphonelib-product.jar /system/product/framework/com.google.android.dialer.support.jar /system/product/framework/com.motorola.android.subsidyinst.jar /system/product/framework/ims-ext-common.jar /system/product/framework/uimgbalibrary.jarlogger.lifecycle("[local-ac] adjusting project to use locally published android-components modules")
+
+// Inject mavenLocal repository. This is where we're expected to publish modules.
+repositories {
+    mavenLocal()
+}
+
+configurations.all { config ->
+    if (config.isCanBeResolved()) {
+        config.resolutionStrategy { strategy ->
+            dependencySubstitution {
+                all { dependency ->
+                    if (!(dependency.requested instanceof ModuleComponentSelector)) {
+                        // We only care about substituting for a module, not a project.
+                        return
+                    }
+
+                    // For every org.mozilla.components.* module, substitute its version for '+'.
+                    // '+' version tells gradle to resolve the latest available version.
+                    // As long as 'mavenLocal' is in the repositories list, gradle should pick out
+                    // latest published module during dependency resolution phase.
+                    def group = dependency.requested.group
+                    if (group == 'org.mozilla.components') {
+                        def name = dependency.requested.module
+                        dependency.useTarget([group: group, name: name, version: '0.0.1-+'])
+                    }
+                }
+            }
+        }
+    }
+}startActivityForResult(new Intent(Intent.ACTION_VIEW)
+            .setData(new Uri.Builder().scheme("
 
   <body>
 
